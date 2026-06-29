@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Emergent - TON Crowdfunding</title>
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <script src="https://unpkg.com/@tonconnect/ui@latest/dist/tonconnect-ui.min.js"></script>
+    <style>
+        body { font-family: Arial, sans-serif; background: #121212; color: #fff; margin: 0; padding: 0; }
+        .container { padding: 20px; max-width: 600px; margin: 0 auto; }
+        .project { background: #1e1e1e; padding: 15px; margin: 10px 0; border-radius: 12px; }
+        .ton-blue { color: #0098EA; }
+        button { background: #0098EA; color: white; border: none; padding: 12px 24px; border-radius: 8px; cursor: pointer; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="ton-blue">🌱 Emergent - Crowdfunding TON</h1>
+        <p>Bienvenido a la plataforma de donaciones y growfunding en TON.</p>
+        
+        <button onclick="connectWallet()">Conectar Billetera TON</button>
+        <div id="wallet-info"></div>
+        
+        <h2>Proyectos Destacados</h2>
+        <div id="projects-list"></div>
+        
+        <button onclick="createProject()">Crear Proyecto</button>
+    </div>
+
+    <script>
+        const tg = window.Telegram.WebApp;
+        tg.expand();
+        
+        let connector;
+        
+        async function initTonConnect() {
+            connector = new TonConnectUI({
+                manifestUrl: window.location.origin + '/tonconnect-manifest.json',
+                buttonRootId: 'ton-connect-button'
+            });
+        }
+        
+        async function connectWallet() {
+            try {
+                const connected = await connector.connectWallet();
+                document.getElementById('wallet-info').innerHTML = `<p>Billetera conectada: ${connected.account.address}</p>`;
+                // Call backend to register
+            } catch (e) {
+                console.error(e);
+            }
+        }
+        
+        // Mock projects
+        function loadProjects() {
+            const projects = [
+                { id: 1, title: "🌱 Proyecto EcoFarm", goal: 1000, funded: 450, description: "Agricultura sostenible en TON" },
+                { id: 2, title: "🎮 GameFi Arena", goal: 2500, funded: 1200, description: "Mini juego play-to-earn" }
+            ];
+            let html = '';
+            projects.forEach(p => {
+                html += `
+                    <div class="project">
+                        <strong>${p.title}</strong><br>
+                        <small>${p.description}</small><br>
+                        <strong>${p.funded}/${p.goal} TON</strong><br>
+                        <button onclick="donate(${p.id})">💰 Donar</button>
+                        <button onclick="likeProject(${p.id})">❤️ Like</button>
+                    </div>`;
+            });
+            document.getElementById('projects-list').innerHTML = html;
+        }
+        
+        function donate(projectId) {
+            alert('Simulación de donación a proyecto ' + projectId + '. Transacción a: UQD-Hh6Bb_hn3k0zrizn_e32-5dWPThZnCDT0qhOtwMxTkHc');
+            // In real, use TonConnect to send transaction
+        }
+        
+        function createProject() {
+            const title = prompt("Título del proyecto:");
+            if (title) alert('✅ Proyecto "' + title + '" creado (simulado). Ahora pasa a votación en 30 días.');
+        }
+
+        function likeProject(id) {
+            alert('❤️ Like registrado en proyecto ' + id + '. Esto aumenta su valuación!');
+        }
+        
+        window.onload = () => {
+            initTonConnect();
+            loadProjects();
+        };
+    </script>
+</body>
+</html>
