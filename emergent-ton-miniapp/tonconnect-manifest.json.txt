@@ -1,0 +1,5 @@
+{
+  "url": "https://tu-miniapp.example.com",
+  "name": "Emergent TON",
+  "iconUrl": "https://tu-miniapp.example.com/icon.png"
+}

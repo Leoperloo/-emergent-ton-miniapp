@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Emergent TON</title>
+  <script src="https://unpkg.com/@tonconnect/ui@2.0.0/dist/tonconnect-ui.min.js"></script>
+  <style>
+    body { font-family: Arial, sans-serif; background: #0a0a0a; color: white; margin:0; padding:20px; }
+    .card { background:#1f1f1f; padding:20px; border-radius:16px; margin:15px 0; }
+    button { background:#0098EA; color:white; border:none; padding:15px; width:100%; border-radius:12px; font-size:16px; margin:10px 0; }
+  </style>
+</head>
+<body>
+  <h1 style="text-align:center; color:#0098EA;">🌱 Emergent TON</h1>
+  <p style="text-align:center;">Crowdfunding en TON</p>
+
+  <div id="connect-btn"></div>
+
+  <div class="card">
+    <h2>Mi Wallet</h2>
+    <p id="wallet-status">Conecta tu billetera TON</p>
+  </div>
+
+  <div class="card">
+    <h2>Hacer Donación</h2>
+    <input id="amount" type="number" step="0.01" placeholder="0.01 TON" style="width:100%; padding:12px; border-radius:8px;">
+    <button onclick="donate()">Donar y Recibir Diamantes</button>
+  </div>
+
+  <script>
+    const connector = new TonConnectUI({
+      manifestUrl: window.location.origin + "/tonconnect-manifest.json",
+      buttonRootId: "connect-btn"
+    });
+
+    async function donate() {
+      const amount = document.getElementById("amount").value;
+      alert(`Donación de ${amount} TON realizada.\nRecibiste ${amount * 5} diamantes 💎\n\nDirección: UQD-Hh6Bb_hn3k0zrizn_e32-5dWPThZnCDT0qhOtwMxTkHc`);
+    }
+  </script>
+</body>
+</html>
